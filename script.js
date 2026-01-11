@@ -19,6 +19,10 @@
     const timelineTabs = document.querySelectorAll('.toggle-btn');
     const timelinePanels = document.querySelectorAll('.timeline-panel');
     const highlightNumbers = document.querySelectorAll('.highlight-number');
+    
+    // Theme and Language toggles
+    const themeToggle = document.getElementById('theme-toggle');
+    const langToggle = document.getElementById('lang-toggle');
 
     // Cursor elements (will be created dynamically)
     let cursorGlow, cursorDot, cursorRing;
@@ -504,6 +508,114 @@
     }
 
     // ==========================================
+    // Theme Toggle
+    // ==========================================
+    
+    /**
+     * Initialize theme from localStorage or system preference
+     */
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        
+        // Only switch to light if explicitly saved as light
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if (themeToggle) {
+                themeToggle.setAttribute('aria-checked', 'true');
+                themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+            }
+        } else {
+            // Dark theme is the default
+            document.documentElement.removeAttribute('data-theme');
+            if (themeToggle) {
+                themeToggle.setAttribute('aria-checked', 'false');
+                themeToggle.setAttribute('aria-label', 'Switch to light theme');
+            }
+        }
+    }
+    
+    /**
+     * Toggle between light and dark theme
+     */
+    function toggleTheme() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        
+        if (isLight) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
+            themeToggle.setAttribute('aria-checked', 'false');
+            themeToggle.setAttribute('aria-label', 'Switch to light theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            themeToggle.setAttribute('aria-checked', 'true');
+            themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+        }
+    }
+
+    // ==========================================
+    // Language Toggle
+    // ==========================================
+    
+    /**
+     * Initialize language from localStorage
+     */
+    function initLanguage() {
+        const savedLang = localStorage.getItem('language') || 'en';
+        
+        if (savedLang === 'de') {
+            document.documentElement.lang = 'de';
+            applyLanguage('de');
+            if (langToggle) {
+                langToggle.setAttribute('aria-checked', 'true');
+                langToggle.setAttribute('aria-label', 'Switch to English');
+            }
+        } else {
+            document.documentElement.lang = 'en';
+            applyLanguage('en');
+            if (langToggle) {
+                langToggle.setAttribute('aria-checked', 'false');
+                langToggle.setAttribute('aria-label', 'Switch to German');
+            }
+        }
+    }
+    
+    /**
+     * Toggle between English and German
+     */
+    function toggleLanguage() {
+        const isGerman = document.documentElement.lang === 'de';
+        
+        if (isGerman) {
+            document.documentElement.lang = 'en';
+            localStorage.setItem('language', 'en');
+            applyLanguage('en');
+            langToggle.setAttribute('aria-checked', 'false');
+            langToggle.setAttribute('aria-label', 'Switch to German');
+        } else {
+            document.documentElement.lang = 'de';
+            localStorage.setItem('language', 'de');
+            applyLanguage('de');
+            langToggle.setAttribute('aria-checked', 'true');
+            langToggle.setAttribute('aria-label', 'Switch to English');
+        }
+    }
+    
+    /**
+     * Apply language to all translatable elements
+     */
+    function applyLanguage(lang) {
+        const translatableElements = document.querySelectorAll('[data-en][data-de]');
+        
+        translatableElements.forEach(element => {
+            const text = element.getAttribute(`data-${lang}`);
+            if (text) {
+                element.textContent = text;
+            }
+        });
+    }
+
+    // ==========================================
     // Initialize Everything
     // ==========================================
     
@@ -543,6 +655,18 @@
         });
 
         document.addEventListener('keydown', handleEscapeKey);
+
+        // Theme and Language toggle listeners
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        if (langToggle) {
+            langToggle.addEventListener('click', toggleLanguage);
+        }
+
+        // Initialize theme and language from localStorage
+        initTheme();
+        initLanguage();
 
         // Initial scroll check
         handleScroll();
