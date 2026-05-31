@@ -584,6 +584,15 @@ address {
     color: var(--color-text-secondary);
     margin-bottom: var(--space-xl);
     letter-spacing: 0.06em;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+@media (max-width: 640px) {
+    .hero-subtitle {
+        font-size: 0.6rem;
+        letter-spacing: 0.03em;
+    }
 }
 
 .hero-social {
