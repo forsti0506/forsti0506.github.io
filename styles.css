@@ -44,7 +44,7 @@
     --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
     --text-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
     --text-3xl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
-    --text-4xl: clamp(2.75rem, 1.5rem + 6.5vw, 6rem);
+    --text-4xl: clamp(2.5rem, 1.25rem + 5vw, 4.75rem);
 
     /* Spacing */
     --space-xs: 0.25rem;
@@ -411,7 +411,6 @@ address {
     justify-content: center;
     position: relative;
     padding: calc(var(--navbar-height) + var(--space-2xl)) var(--space-lg) var(--space-2xl);
-    overflow: hidden;
 }
 
 .hero-background {
@@ -419,6 +418,7 @@ address {
     inset: 0;
     overflow: hidden;
     z-index: -1;
+    pointer-events: none;
 }
 
 /* Grid texture — architectural, replaces gradient orbs */
@@ -565,6 +565,8 @@ address {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    overflow-wrap: break-word;
+    padding-right: 0.08em;
 }
 
 .hero-title {
