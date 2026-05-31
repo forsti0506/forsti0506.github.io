@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link" data-en="Skip to main content" data-de="Zum Hauptinhalt springen">Skip to main content</a>
@@ -23,8 +24,10 @@
             </button>
             <ul id="nav-menu" class="nav-menu" role="menubar">
                 <li role="none"><a href="#about" role="menuitem" data-en="Hey!" data-de="Hey!">Hey!</a></li>
+                <li role="none"><a href="#now" role="menuitem" data-en="Now" data-de="Jetzt">Now</a></li>
                 <li role="none"><a href="#timeline" role="menuitem" data-en="Journey" data-de="Werdegang">Journey</a></li>
                 <li role="none"><a href="#skills" role="menuitem" data-en="Tech Stack" data-de="Technologien">Tech Stack</a></li>
+                <li role="none"><a href="#writing" role="menuitem" data-en="Writing" data-de="Schreiben">Writing</a></li>
                 <li role="none"><a href="#contact" role="menuitem" data-en="Let's Talk" data-de="Kontakt">Let's Talk</a></li>
                 <li role="none"><a href="#imprint" role="menuitem" data-en="Legal" data-de="Impressum">Legal</a></li>
             </ul>
@@ -128,12 +131,42 @@
                             <span class="highlight-label" data-en="Years in Tech" data-de="Jahre in Tech">Years in Tech</span>
                         </div>
                         <div class="highlight-item">
-                            <span class="highlight-number" data-count="1000">0</span>
-                            <span class="highlight-label" data-en="Coffees ☕" data-de="Kaffees ☕">Coffees ☕</span>
+                            <span class="highlight-number" data-count="5" data-suffix="+">0</span>
+                            <span class="highlight-label" data-en="Global Team Syncs Led" data-de="Globale Team Syncs geleitet">Global Team Syncs Led</span>
                         </div>
                         <div class="highlight-item">
-                            <span class="highlight-number" data-count="∞">∞</span>
-                            <span class="highlight-label" data-en="Curiosity" data-de="Neugier">Curiosity</span>
+                            <span class="highlight-number" data-count="100" data-suffix="+">0</span>
+                            <span class="highlight-label" data-en="Daily Standups" data-de="Daily Standups">Daily Standups</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Now Section -->
+        <section id="now" class="section now" aria-labelledby="now-title">
+            <div class="container">
+                <h2 id="now-title" class="section-title" data-en="Right Now 📍" data-de="Gerade jetzt 📍">Right Now 📍</h2>
+                <div class="now-grid fade-in">
+                    <div class="now-card">
+                        <div class="now-icon" aria-hidden="true">🚀</div>
+                        <div class="now-content">
+                            <h3 class="now-card-title" data-en="New Chapter" data-de="Neues Kapitel">New Chapter</h3>
+                            <p class="now-card-text" data-en="Just joined Zühlke Group as Lead Software Architect — diving into enterprise consulting and cloud-native transformations." data-de="Gerade als Lead Software Architect bei Zühlke Group gestartet — Enterprise Consulting und Cloud-Native Transformationen.">Just joined Zühlke Group as Lead Software Architect — diving into enterprise consulting and cloud-native transformations.</p>
+                        </div>
+                    </div>
+                    <div class="now-card">
+                        <div class="now-icon" aria-hidden="true">🎓</div>
+                        <div class="now-content">
+                            <h3 class="now-card-title" data-en="MBA in Progress" data-de="MBA läuft">MBA in Progress</h3>
+                            <p class="now-card-text" data-en="Studying International Management at MCI with a focus on IT Strategy — bridging tech leadership with business thinking." data-de="International Management am MCI mit Fokus auf IT-Strategie — Brücke zwischen Tech-Leadership und Business.">Studying International Management at MCI with a focus on IT Strategy — bridging tech leadership with business thinking.</p>
+                        </div>
+                    </div>
+                    <div class="now-card">
+                        <div class="now-icon" aria-hidden="true">🤖</div>
+                        <div class="now-content">
+                            <h3 class="now-card-title" data-en="AI-First Patterns" data-de="AI-First Patterns">AI-First Patterns</h3>
+                            <p class="now-card-text" data-en="Exploring agentic workflows, LLM-powered tooling, and what AI-first engineering truly means for architecture and teams." data-de="Erkundung agentischer Workflows, LLM-Tooling und was AI-First Engineering für Architektur und Teams bedeutet.">Exploring agentic workflows, LLM-powered tooling, and what AI-first engineering truly means for architecture and teams.</p>
                         </div>
                     </div>
                 </div>
@@ -164,7 +197,7 @@
                                 <div class="timeline-date">
                                     <time datetime="2026-05">2026</time> – Now
                                 </div>
-                                <h3 id="job-zuhlke" class="timeline-title">Lead Software Architect @ Zühlke Group 🏗️</h3>
+                                <h3 id="job-zuhlke" class="timeline-title"><span class="company-badge company-zuhlke" aria-hidden="true">Z</span>Lead Software Architect @ Zühlke Group 🏗️</h3>
                                 <p class="timeline-company">Cloud-native architecture for enterprise clients · Zürich, Switzerland</p>
                                 <ul class="timeline-description">
                                     <li>Designing cloud-native architectures and guiding companies through complex technological transformations</li>
@@ -187,7 +220,7 @@
                                 <div class="timeline-date">
                                     <time datetime="2023-08">2023</time> – <time datetime="2026-04">2026</time>
                                 </div>
-                                <h3 id="job-dynatrace" class="timeline-title">Team Lead & Senior Software Engineer @ Dynatrace 🚀</h3>
+                                <h3 id="job-dynatrace" class="timeline-title"><span class="company-badge company-dynatrace" aria-hidden="true">D</span>Team Lead & Senior Software Engineer @ Dynatrace 🚀</h3>
                                 <p class="timeline-company">Engineering leadership in a global SaaS platform · Linz, Austria</p>
                                 <ul class="timeline-description">
                                     <li>Drove Dynatrace's AI-first strategy across the full development lifecycle</li>
@@ -211,7 +244,7 @@
                                 <div class="timeline-date">
                                     <time datetime="2020-12">2020</time> – <time datetime="2023-07">2023</time>
                                 </div>
-                                <h3 id="job-raiffeisen-architect" class="timeline-title">Solution Architect @ Raiffeisen 🏦</h3>
+                                <h3 id="job-raiffeisen-architect" class="timeline-title"><span class="company-badge company-raiffeisen" aria-hidden="true">R</span>Solution Architect @ Raiffeisen 🏦</h3>
                                 <p class="timeline-company">MEIN ELBA — Austria's leading banking app · Linz, Austria</p>
                                 <ul class="timeline-description">
                                     <li>Solution architecture for MEIN ELBA for up to 4 parallel development teams</li>
@@ -234,7 +267,7 @@
                                 <div class="timeline-date">
                                     <time datetime="2018-08">2018</time> – <time datetime="2020-12">2020</time>
                                 </div>
-                                <h3 id="job-raiffeisen-dev" class="timeline-title">Software Developer @ Raiffeisen 💻</h3>
+                                <h3 id="job-raiffeisen-dev" class="timeline-title"><span class="company-badge company-raiffeisen" aria-hidden="true">R</span>Software Developer @ Raiffeisen 💻</h3>
                                 <p class="timeline-company">Where it all started professionally · Linz, Austria</p>
                                 <ul class="timeline-description">
                                     <li>Full-stack development on MEIN ELBA with Java & Angular</li>
@@ -318,13 +351,13 @@
                             </svg>
                             Languages & Frameworks
                         </h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">Spring Boot</span>
-                            <span class="skill-tag">Quarkus</span>
-                            <span class="skill-tag">Angular</span>
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">TypeScript</span>
+                        <div class="skill-icon-grid">
+                            <div class="skill-icon-item"><i class="devicon-java-plain colored" aria-hidden="true"></i><span>Java</span></div>
+                            <div class="skill-icon-item"><i class="devicon-spring-plain colored" aria-hidden="true"></i><span>Spring Boot</span></div>
+                            <div class="skill-icon-item"><i class="devicon-quarkus-plain colored" aria-hidden="true"></i><span>Quarkus</span></div>
+                            <div class="skill-icon-item"><i class="devicon-angularjs-plain colored" aria-hidden="true"></i><span>Angular</span></div>
+                            <div class="skill-icon-item"><i class="devicon-react-original colored" aria-hidden="true"></i><span>React</span></div>
+                            <div class="skill-icon-item"><i class="devicon-typescript-plain colored" aria-hidden="true"></i><span>TypeScript</span></div>
                         </div>
                     </div>
 
@@ -337,13 +370,13 @@
                             </svg>
                             Cloud & Infra
                         </h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Kubernetes</span>
-                            <span class="skill-tag">Helm</span>
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">PostgreSQL</span>
-                            <span class="skill-tag">Kafka</span>
-                            <span class="skill-tag">Observability</span>
+                        <div class="skill-icon-grid">
+                            <div class="skill-icon-item"><i class="devicon-kubernetes-plain colored" aria-hidden="true"></i><span>Kubernetes</span></div>
+                            <div class="skill-icon-item"><i class="devicon-helm-original colored" aria-hidden="true"></i><span>Helm</span></div>
+                            <div class="skill-icon-item"><i class="devicon-docker-plain colored" aria-hidden="true"></i><span>Docker</span></div>
+                            <div class="skill-icon-item"><i class="devicon-postgresql-plain colored" aria-hidden="true"></i><span>PostgreSQL</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">⚡</span><span>Kafka</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">📊</span><span>Observability</span></div>
                         </div>
                     </div>
 
@@ -355,12 +388,12 @@
                             </svg>
                             Architecture
                         </h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Microservices</span>
-                            <span class="skill-tag">Microfrontends</span>
-                            <span class="skill-tag">Solution Architecture</span>
-                            <span class="skill-tag">API Design</span>
-                            <span class="skill-tag">Cloud-Native Patterns</span>
+                        <div class="skill-icon-grid">
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">⬡</span><span>Microservices</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🧩</span><span>Microfrontends</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🏛️</span><span>Solution Architecture</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🔌</span><span>API Design</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">☁️</span><span>Cloud-Native Patterns</span></div>
                         </div>
                     </div>
 
@@ -373,13 +406,13 @@
                             </svg>
                             AI-First & Tooling
                         </h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">AI-First Engineering</span>
-                            <span class="skill-tag">AI Agents</span>
-                            <span class="skill-tag">GitHub Copilot</span>
-                            <span class="skill-tag">CI/CD</span>
-                            <span class="skill-tag">Gradle</span>
-                            <span class="skill-tag">Maven</span>
+                        <div class="skill-icon-grid">
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🤖</span><span>AI-First Engineering</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🔮</span><span>AI Agents</span></div>
+                            <div class="skill-icon-item"><i class="devicon-github-original" aria-hidden="true"></i><span>GitHub Copilot</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">♾️</span><span>CI/CD</span></div>
+                            <div class="skill-icon-item"><i class="devicon-gradle-plain colored" aria-hidden="true"></i><span>Gradle</span></div>
+                            <div class="skill-icon-item"><i class="devicon-maven-plain colored" aria-hidden="true"></i><span>Maven</span></div>
                         </div>
                     </div>
 
@@ -391,14 +424,14 @@
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
-                            Leadership
+                            Engineering Leadership
                         </h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Engineering Leadership</span>
-                            <span class="skill-tag">Coaching</span>
-                            <span class="skill-tag">Project Management</span>
-                            <span class="skill-tag">Strategic Planning</span>
-                            <span class="skill-tag">Change Management</span>
+                        <div class="skill-icon-grid">
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🧭</span><span>Engineering Leadership</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🎯</span><span>Coaching</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">📋</span><span>Project Management</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🗺️</span><span>Strategic Planning</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🔄</span><span>Change Management</span></div>
                         </div>
                     </div>
 
@@ -410,14 +443,42 @@
                             </svg>
                             Web Accessibility
                         </h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">WCAG 2.1</span>
-                            <span class="skill-tag">WAS Certified</span>
-                            <span class="skill-tag">Inclusive Design</span>
-                            <span class="skill-tag">Screen Readers</span>
-                            <span class="skill-tag">Accessibility Auditing</span>
+                        <div class="skill-icon-grid">
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">♿</span><span>WCAG 2.1</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🏅</span><span>WAS Certified</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🎨</span><span>Inclusive Design</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🔊</span><span>Screen Readers</span></div>
+                            <div class="skill-icon-item"><span class="skill-emoji" aria-hidden="true">🔍</span><span>Accessibility Auditing</span></div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Writing Section -->
+        <section id="writing" class="section writing" aria-labelledby="writing-title">
+            <div class="container">
+                <h2 id="writing-title" class="section-title" data-en="Writing & Thinking ✍️" data-de="Schreiben & Denken ✍️">Writing & Thinking ✍️</h2>
+                <p class="writing-intro fade-in" data-en="I write about the things I care about: building systems that last, leading teams well, and the intersection of AI with software architecture." data-de="Ich schreibe über die Dinge, die mir wichtig sind: langlebige Systeme, gute Teamführung und die Schnittstelle von KI und Softwarearchitektur.">I write about the things I care about: building systems that last, leading teams well, and the intersection of AI with software architecture.</p>
+                <div class="writing-topics fade-in">
+                    <div class="topic-card">
+                        <div class="topic-icon" aria-hidden="true">☁️</div>
+                        <h3 class="topic-title" data-en="Cloud-Native Architecture" data-de="Cloud-Native Architektur">Cloud-Native Architecture</h3>
+                        <p class="topic-desc" data-en="Microservices, Kubernetes, distributed systems — building platforms that scale without breaking teams." data-de="Microservices, Kubernetes, verteilte Systeme — Plattformen bauen, die skalieren, ohne Teams zu belasten.">Microservices, Kubernetes, distributed systems — building platforms that scale without breaking teams.</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon" aria-hidden="true">🤖</div>
+                        <h3 class="topic-title" data-en="AI-First Engineering" data-de="AI-First Engineering">AI-First Engineering</h3>
+                        <p class="topic-desc" data-en="How AI tooling changes the way we design, write, and review software — and what it means for engineering teams." data-de="Wie KI-Tooling die Art verändert, wie wir Software designen, schreiben und reviewen — und was das für Teams bedeutet.">How AI tooling changes the way we design, write, and review software — and what it means for engineering teams.</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon" aria-hidden="true">♿</div>
+                        <h3 class="topic-title" data-en="Web Accessibility" data-de="Web Accessibility">Web Accessibility</h3>
+                        <p class="topic-desc" data-en="WCAG, inclusive design, and why building accessible software isn't a constraint — it's a superpower." data-de="WCAG, inklusives Design und warum barrierefreie Software kein Constraint ist — sondern eine Superpower.">WCAG, inclusive design, and why building accessible software isn't a constraint — it's a superpower.</p>
+                    </div>
+                </div>
+                <div class="writing-cta fade-in">
+                    <a href="/blog" class="btn-primary" data-en="Read the Blog →" data-de="Zum Blog →">Read the Blog →</a>
                 </div>
             </div>
         </section>

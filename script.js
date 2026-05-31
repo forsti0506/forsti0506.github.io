@@ -209,24 +209,32 @@
         numbersAnimated = true;
 
         highlightNumbers.forEach(number => {
-            const target = parseInt(number.dataset.count, 10);
+            const countValue = number.dataset.count;
+            const suffix = number.dataset.suffix || '';
+            const target = parseInt(countValue, 10);
+
+            if (isNaN(target)) {
+                number.textContent = countValue;
+                return;
+            }
+
             const duration = 2000;
             const startTime = performance.now();
 
             function updateNumber(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                
+
                 // Easing function for smooth animation
                 const easeOutQuart = 1 - Math.pow(1 - progress, 4);
                 const current = Math.floor(easeOutQuart * target);
-                
-                number.textContent = current;
+
+                number.textContent = current + suffix;
 
                 if (progress < 1) {
                     requestAnimationFrame(updateNumber);
                 } else {
-                    number.textContent = target;
+                    number.textContent = target + suffix;
                 }
             }
 
@@ -343,7 +351,10 @@
             
             // Set numbers immediately
             highlightNumbers.forEach(number => {
-                number.textContent = number.dataset.count;
+                const suffix = number.dataset.suffix || '';
+                const countValue = number.dataset.count;
+                const target = parseInt(countValue, 10);
+                number.textContent = isNaN(target) ? countValue : target + suffix;
             });
             numbersAnimated = true;
         }
@@ -362,7 +373,6 @@
     let ringX = 0;
     let ringY = 0;
     let isMouseMoving = false;
-    let sparkleThrottle = 0;
 
     /**
      * Create custom cursor elements
@@ -410,12 +420,6 @@
             cursorGlow.classList.add('active');
             cursorDot.classList.add('active');
             cursorRing.classList.add('active');
-
-            // Create occasional sparkles
-            sparkleThrottle++;
-            if (sparkleThrottle % 5 === 0) {
-                createSparkle(mouseX, mouseY);
-            }
         });
 
         // Mouse leave handler
@@ -429,15 +433,6 @@
         // Mouse down/up for click effect
         document.addEventListener('mousedown', () => {
             cursorDot.classList.add('clicking');
-            // Create burst of sparkles on click
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createSparkle(
-                        mouseX + (Math.random() - 0.5) * 30,
-                        mouseY + (Math.random() - 0.5) * 30
-                    );
-                }, i * 30);
-            }
         });
 
         document.addEventListener('mouseup', () => {
@@ -487,24 +482,6 @@
         }
 
         requestAnimationFrame(animateCursor);
-    }
-
-    /**
-     * Create a sparkle particle
-     */
-    function createSparkle(x, y) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.setAttribute('aria-hidden', 'true');
-        sparkle.style.left = x + 'px';
-        sparkle.style.top = y + 'px';
-        sparkle.style.background = Math.random() > 0.5 ? 'var(--color-primary-light)' : 'var(--color-secondary)';
-        document.body.appendChild(sparkle);
-
-        // Remove after animation
-        setTimeout(() => {
-            sparkle.remove();
-        }, 600);
     }
 
     // ==========================================
