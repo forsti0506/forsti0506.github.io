@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Martin Forstner writes about cloud-native architecture, AI-first engineering, and web accessibility.">
+    <meta name="author" content="Martin Forstner">
+    <title>Writing — Martin Forstner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================
+           Blog-specific styles
+           ========================================== */
+
+        /* Header */
+        .blog-header {
+            padding: calc(var(--navbar-height) + var(--space-3xl)) var(--space-lg) var(--space-3xl);
+            background: var(--color-bg);
+            position: relative;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .blog-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse 90% 100% at 50% 0%, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 100% at 50% 0%, black 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .blog-header-inner {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .blog-header-label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+            opacity: 0.75;
+        }
+
+        .blog-header-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 1rem + 6vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.92;
+            color: var(--color-text);
+            margin-bottom: var(--space-lg);
+            overflow-wrap: break-word;
+            padding-right: 0.05em;
+        }
+
+        .blog-header-subtitle {
+            font-size: var(--text-lg);
+            color: var(--color-text-secondary);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: var(--space-2xl);
+        }
+
+        /* Category filter pills */
+        .blog-filters {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .blog-filter {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+            background: transparent;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .blog-filter:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--color-primary);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .blog-filter[aria-pressed="true"] {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        /* ── Posts section ── */
+        .blog-posts {
+            padding: var(--space-4xl) var(--space-lg);
+            background: var(--color-bg);
+        }
+
+        .blog-posts-inner {
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+
+        /* Shared post meta atoms */
+        .post-category {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 2px 9px;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+        }
+
+        .post-status {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 2px 9px;
+            border-radius: var(--radius-full);
+            white-space: nowrap;
+        }
+
+        .post-status--progress {
+            color: var(--color-secondary);
+            background: rgba(56, 189, 248, 0.07);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .post-status--soon {
+            color: var(--color-text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--color-border);
+        }
+
+        .post-date,
+        .post-readtime {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .post-meta-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        /* ── Featured post ── */
+        .post-featured {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3xl);
+            margin-bottom: var(--space-xl);
+            position: relative;
+            overflow: hidden;
+            transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        .post-featured::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .post-featured::after {
+            content: '';
+            position: absolute;
+            right: -80px; top: -80px;
+            width: 360px; height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, transparent 68%);
+            pointer-events: none;
+        }
+
+        .post-featured:hover {
+            border-color: rgba(245, 158, 11, 0.22);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .post-featured-layout {
+            position: relative;
+            display: grid;
+            gap: var(--space-2xl);
+        }
+
+        @media (min-width: 768px) {
+            .post-featured-layout {
+                grid-template-columns: 1fr 140px;
+                align-items: start;
+            }
+        }
+
+        .post-featured-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 1rem + 2.5vw, 2.75rem);
+            font-weight: 700;
+            color: var(--color-text);
+            letter-spacing: -0.03em;
+            line-height: 1.08;
+            margin: var(--space-md) 0;
+            overflow-wrap: break-word;
+        }
+
+        .post-featured-excerpt {
+            font-size: var(--text-base);
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            max-width: 640px;
+        }
+
+        .post-featured-aside {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 768px) {
+            .post-featured-aside {
+                align-items: flex-end;
+                justify-content: space-between;
+                height: 100%;
+            }
+        }
+
+        .post-featured-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .post-featured-stats {
+                align-items: flex-end;
+            }
+        }
+
+        .post-featured-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px; height: 42px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: var(--color-primary);
+            flex-shrink: 0;
+            opacity: 0.5;
+        }
+
+        /* ── Section divider ── */
+        .posts-divider {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .posts-divider span {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            white-space: nowrap;
+        }
+
+        .posts-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+
+        /* ── Post grid ── */
+        .post-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 640px) {
+            .post-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .post-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* ── Post card ── */
+        .post-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-base),
+                        box-shadow var(--transition-base),
+                        border-color var(--transition-base);
+        }
+
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-slow);
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .post-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .post-card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .post-card-title {
+            font-family: var(--font-display);
+            font-size: var(--text-lg);
+            font-weight: 700;
+            color: var(--color-text);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .post-card-excerpt {
+            font-size: var(--text-sm);
+            color: var(--color-text-secondary);
+            line-height: 1.72;
+        }
+
+        .post-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* ── Nav active state for Writing link ── */
+        .nav-menu a[href="/blog"] {
+            color: var(--color-text);
+        }
+
+        .nav-menu a[href="/blog"]::after {
+            width: 100%;
+        }
+
+        /* Light theme tweaks */
+        [data-theme="light"] .blog-header {
+            background: var(--color-bg-secondary);
+        }
+
+        [data-theme="light"] .blog-posts {
+            background: var(--color-bg);
+        }
+
+        [data-theme="light"] .post-featured,
+        [data-theme="light"] .post-card {
+            box-shadow: var(--shadow-sm);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation (identical to index.html) -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="nav-logo" aria-label="Martin Forstner — Home">MF</a>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul id="nav-menu" class="nav-menu" role="menubar">
+                <li role="none"><a href="/#about"    role="menuitem" data-en="Hey!"       data-de="Hey!">Hey!</a></li>
+                <li role="none"><a href="/#now"      role="menuitem" data-en="Now"        data-de="Jetzt">Now</a></li>
+                <li role="none"><a href="/#timeline" role="menuitem" data-en="Journey"    data-de="Werdegang">Journey</a></li>
+                <li role="none"><a href="/#skills"   role="menuitem" data-en="Tech Stack" data-de="Technologien">Tech Stack</a></li>
+                <li role="none"><a href="/blog"      role="menuitem" aria-current="page"  data-en="Writing"   data-de="Schreiben">Writing</a></li>
+                <li role="none"><a href="/#contact"  role="menuitem" data-en="Let's Talk" data-de="Kontakt">Let's Talk</a></li>
+            </ul>
+            <div class="nav-switches">
+                <div class="switch-container">
+                    <span class="switch-label">EN</span>
+                    <button class="toggle-switch" id="lang-toggle" aria-label="Switch to German" role="switch" aria-checked="false">
+                        <span class="toggle-slider"></span>
+                    </button>
+                    <span class="switch-label">DE</span>
+                </div>
+                <div class="switch-container">
+                    <svg class="switch-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                    </svg>
+                    <button class="toggle-switch" id="theme-toggle" aria-label="Switch to light theme" role="switch" aria-checked="false">
+                        <span class="toggle-slider"></span>
+                    </button>
+                    <svg class="switch-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+
+        <!-- Blog header -->
+        <header class="blog-header">
+            <div class="blog-header-inner">
+                <span class="blog-header-label">05 — Writing</span>
+                <h1 class="blog-header-title">Writing</h1>
+                <p class="blog-header-subtitle">Thoughts on cloud-native architecture, AI-first engineering, and the craft of building software that lasts.</p>
+                <nav class="blog-filters" aria-label="Filter by topic">
+                    <button class="blog-filter" aria-pressed="true">All</button>
+                    <button class="blog-filter" aria-pressed="false">Architecture</button>
+                    <button class="blog-filter" aria-pressed="false">AI-First</button>
+                    <button class="blog-filter" aria-pressed="false">Accessibility</button>
+                    <button class="blog-filter" aria-pressed="false">Leadership</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Posts -->
+        <section class="blog-posts" aria-label="Articles">
+            <div class="blog-posts-inner">
+
+                <!-- Featured / in-progress post -->
+                <article class="post-featured fade-in" aria-labelledby="post-featured-title">
+                    <div class="post-featured-layout">
+                        <div>
+                            <div class="post-meta-row">
+                                <span class="post-category">AI-First</span>
+                                <span class="post-status post-status--progress">In progress</span>
+                            </div>
+                            <h2 id="post-featured-title" class="post-featured-title">The Architecture of AI-First Teams</h2>
+                            <p class="post-featured-excerpt">What changes when AI isn't just a tool but a teammate? Reflections on agentic workflows, LLM-powered tooling, and what AI-first engineering truly means for how we design systems, review code, and lead teams — from someone who's been doing it in production at Dynatrace and Zühlke.</p>
+                        </div>
+                        <aside class="post-featured-aside" aria-label="Post details">
+                            <div class="post-featured-stats">
+                                <span class="post-readtime">~8 min read</span>
+                                <span class="post-date">Coming 2025</span>
+                            </div>
+                            <span class="post-featured-arrow" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                                </svg>
+                            </span>
+                        </aside>
+                    </div>
+                </article>
+
+                <!-- Grid of upcoming posts -->
+                <div class="posts-divider" aria-hidden="true">
+                    <span>More writing</span>
+                </div>
+
+                <div class="post-grid" role="list">
+
+                    <article class="post-card fade-in" role="listitem" aria-labelledby="post-2-title">
+                        <div class="post-meta-row">
+                            <span class="post-category">Cloud-Native</span>
+                            <span class="post-status post-status--soon">Coming soon</span>
+                        </div>
+                        <div class="post-card-body">
+                            <h2 id="post-2-title" class="post-card-title">Kubernetes in the Enterprise: What Nobody Tells You</h2>
+                            <p class="post-card-excerpt">Four years of running Kubernetes in production — across banking scale at Raiffeisen and SaaS at Dynatrace — taught me things the official docs never prepared me for.</p>
+                        </div>
+                        <footer class="post-card-footer">
+                            <span class="post-date">Coming 2025</span>
+                            <span class="post-readtime">~6 min</span>
+                        </footer>
+                    </article>
+
+                    <article class="post-card fade-in" role="listitem" aria-labelledby="post-3-title">
+                        <div class="post-meta-row">
+                            <span class="post-category">Accessibility</span>
+                            <span class="post-status post-status--soon">Coming soon</span>
+                        </div>
+                        <div class="post-card-body">
+                            <h2 id="post-3-title" class="post-card-title">WCAG Is a Floor, Not a Ceiling</h2>
+                            <p class="post-card-excerpt">Why the accessibility community has a compliance problem — and what truly inclusive engineering looks like when you stop treating WCAG as a checklist and start treating it as a starting point.</p>
+                        </div>
+                        <footer class="post-card-footer">
+                            <span class="post-date">Coming 2025</span>
+                            <span class="post-readtime">~5 min</span>
+                        </footer>
+                    </article>
+
+                    <article class="post-card fade-in" role="listitem" aria-labelledby="post-4-title">
+                        <div class="post-meta-row">
+                            <span class="post-category">Leadership</span>
+                            <span class="post-status post-status--soon">Coming soon</span>
+                        </div>
+                        <div class="post-card-body">
+                            <h2 id="post-4-title" class="post-card-title">From Tech Lead to Architect: The Skills Nobody Talks About</h2>
+                            <p class="post-card-excerpt">The gap between senior engineer and architect isn't technical depth — it's learning to think in organisational surfaces, not just code surfaces.</p>
+                        </div>
+                        <footer class="post-card-footer">
+                            <span class="post-date">Coming 2025</span>
+                            <span class="post-readtime">~7 min</span>
+                        </footer>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p>&copy; <span id="current-year">2026</span> Martin Forstner. <span data-en="All rights reserved." data-de="Alle Rechte vorbehalten.">All rights reserved.</span></p>
+            <p class="footer-note" data-en="Built with ❤ and accessibility in mind." data-de="Mit ❤ und Barrierefreiheit im Sinn gebaut.">Built with <span aria-label="love">❤</span> and accessibility in mind.</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to top" hidden>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <script src="script.js"></script>
+    <script>
+        // Category filter toggle
+        document.querySelectorAll('.blog-filter').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.blog-filter').forEach(function(b) {
+                    b.setAttribute('aria-pressed', 'false');
+                });
+                this.setAttribute('aria-pressed', 'true');
+            });
+        });
+    </script>
+</body>
+</html>
