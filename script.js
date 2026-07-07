@@ -19,7 +19,8 @@
     const timelineTabs = document.querySelectorAll('.toggle-btn');
     const timelinePanels = document.querySelectorAll('.timeline-panel');
     const highlightNumbers = document.querySelectorAll('.highlight-number');
-    
+    const railTicks = document.querySelectorAll('.index-rail-tick');
+
     // Theme and Language toggles
     const themeToggle = document.getElementById('theme-toggle');
     const langToggle = document.getElementById('lang-toggle');
@@ -196,6 +197,37 @@
     }
 
     // ==========================================
+    // Index Rail Scrollspy
+    // ==========================================
+
+    /**
+     * Highlight the index-rail tick matching the section in view
+     */
+    function initIndexRailSpy() {
+        if (!railTicks.length) return;
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const tick = document.querySelector(`.index-rail-tick[data-section="${entry.target.id}"]`);
+                if (!tick) return;
+                if (entry.isIntersecting) {
+                    railTicks.forEach(t => t.classList.remove('active'));
+                    tick.classList.add('active');
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '-40% 0px -55% 0px',
+            threshold: 0
+        });
+
+        railTicks.forEach(tick => {
+            const section = document.getElementById(tick.dataset.section);
+            if (section) sectionObserver.observe(section);
+        });
+    }
+
+    // ==========================================
     // Number Animation
     // ==========================================
     
@@ -319,8 +351,7 @@
                 placeholder.style.cssText = `
                     width: 100%;
                     height: 100%;
-                    border-radius: 50%;
-                    background: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+                    background: #ff4433;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -612,6 +643,9 @@
         // Initialize fade-in animations
         initFadeInAnimations();
 
+        // Initialize index rail scrollspy
+        initIndexRailSpy();
+
         // Handle image errors
         handleImageError();
 
@@ -649,8 +683,8 @@
         handleScroll();
 
         // Log accessibility info
-        console.log('%c👋 Welcome to Martin Forstner\'s Portfolio!', 'font-size: 16px; font-weight: bold; color: #6366f1;');
-        console.log('%c♿ This site was built with accessibility in mind (WCAG 2.1 compliant)', 'font-size: 12px; color: #06b6d4;');
+        console.log('%c👋 Welcome to Martin Forstner\'s Portfolio!', 'font-size: 16px; font-weight: bold; color: #ff4433;');
+        console.log('%c♿ This site was built with accessibility in mind (WCAG 2.1 compliant)', 'font-size: 12px; color: #5b8a9e;');
     }
 
     // Run when DOM is ready
